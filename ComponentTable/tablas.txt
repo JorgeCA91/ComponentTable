@@ -1,0 +1,88 @@
+create table servicio_cliente(
+id_sc varchar(18) primary key,
+nombre varchar(60),
+direccion varchar(80)
+);
+
+create table servicio_tecnico(
+id_st varchar(18) primary key,
+nombre varchar(60),
+direccion varchar(80),
+especialidad varchar(20)
+);
+
+create table promocion(
+codigo varchar(10) primary key,
+nombre varchar(60),
+descripcion varchar(90),
+descuento int
+);
+
+create table cliente(
+id_cliente varchar(18) primary key,
+nombre varchar(60),
+direccion varchar(80),
+fecha_alta date,
+id_sc varchar(18),
+foreign key (id_sc) references servicio_cliente (id_sc),
+tipo varchar(8)
+);
+
+create table provedor(
+rfc  varchar(13) primary key,
+nombre varchar(60),
+direccion varchar(80)
+);
+
+create table equipo(
+id_equipo varchar(4) primary key,
+tipo varchar(12),
+descripcion varchar(40),
+proveedor varchar (13),
+foreign key(proveedor) references provedor (rfc),
+precio_renta money
+);
+
+create table linea(
+numero varchar(10) primary key,
+id_equipo varchar(4),
+foreign key (id_equipo) references equipo (id_equipo)
+);
+
+create table reparacion(
+id_tecnico varchar(18),
+id_equipo varchar(4),
+foreign key (id_tecnico) references servicio_tecnico (id_st),
+foreign key (id_equipo) references equipo (id_equipo),
+problema varchar (40),
+fecha date,
+fecha_salida date
+);
+
+create table llamada(
+n_llama varchar(10),
+n_contesta varchar(10),
+foreign key (n_llama) references linea (numero),
+foreign key (n_contesta) references linea (numero),
+fecha date,
+hora_inicio time,
+duracion time
+);
+
+create table alquiler(
+id_cliente varchar(18),
+id_equipo varchar(4),
+foreign key (id_cliente) references cliente (id_cliente),
+foreign key (id_equipo) references equipo (id_equipo),
+fecha_contrato date,
+fecha_fin_contrato date
+);
+
+create table control_promocion(
+id_cliente varchar(18),
+codigo  varchar(10),
+foreign key (id_cliente) references cliente (id_cliente),
+foreign key (codigo) references promocion (codigo),
+fecha date,
+fecha_fin date
+);
