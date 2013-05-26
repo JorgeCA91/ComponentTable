@@ -1,21 +1,18 @@
+
 package com.component.tabla;
+
 import com.component.coneccion.Coneccion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
-public class TableComp extends JFrame
-{
+public class CompTable extends javax.swing.JFrame {
+
     int cantidadAPMax=20;
     int cantidadAPMin=0;
     int cantidadColumnas;
@@ -24,51 +21,25 @@ public class TableComp extends JFrame
     Coneccion con = new Coneccion();
     String tabla;
     Vector filas = new Vector();
+    private int INDEX_TABLA;
     
     DefaultTableModel modelo=new DefaultTableModel();
-    JButton regresar=new JButton("Regresar");
-    JButton adelante=new JButton("Adelante");
-    JTable tabla1 = new JTable();
-    private int INDEX_TABLA;
-
-    public TableComp()
-    {
-        
-    }
-    public TableComp(String tabla)
+    
+    public CompTable(String tabla) 
     {
         this.tabla = tabla;
-        JPanel panel=new JPanel();
-        panel.setLayout(null);
         
-        regresar.setBounds(10,100,100,30);
-        panel.add(regresar);
-        adelante.setBounds(550,150,100,30);
-        panel.add(adelante);
-        
-        tabla1.setBounds(120,10,300,300);
-        tabla1.setModel(modelo);
-        panel.add(tabla1);
-        
-        JScrollPane scrol=new JScrollPane(tabla1);
-        scrol.setBounds(120,20,420,350);
-        panel.add(scrol);
-        
-        JLabel label=new JLabel("Total:");
-        label.setBounds(300,400,80,20);
-        panel.add(label);
-        
-        add(panel);
-        
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        initComponents();
+        this.setLocation(500, 200);
         setVisible(false);
-        setLocation(200,200);
-        setSize(700,500);
-        
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ManejadorBotones botones = new ManejadorBotones() ;
         adelante.addActionListener(botones);
         regresar.addActionListener(botones);
     }
+    
+    
+    
     public void contNameTable()
     {
         try 
@@ -96,13 +67,13 @@ public class TableComp extends JFrame
     }
     public void llenaTabla()
     {
+        tabla1.setModel(modelo);
         tabla1.removeAll();
-        limpiaTabla();
+        filas.removeAllElements();
         try
         {
             ResultSetMetaData rsMd;
             ResultSet rs;
-            
             cantidadColumnas=0;
             con.setTabla(getTabla());
             rs = con.consulta();
@@ -205,4 +176,66 @@ public class TableComp extends JFrame
             }
         }
     }
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla1 = new javax.swing.JTable();
+        regresar = new javax.swing.JButton();
+        adelante = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tabla1.setModel(modelo);
+        jScrollPane1.setViewportView(tabla1);
+
+        regresar.setText("Atras");
+
+        adelante.setText("Adelante");
+        adelante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adelanteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adelante, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adelante)
+                    .addComponent(regresar))
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adelanteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adelanteActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton adelante;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton regresar;
+    private javax.swing.JTable tabla1;
+    // End of variables declaration//GEN-END:variables
 }

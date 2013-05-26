@@ -18,31 +18,9 @@ public class Coneccion
     private ResultSet rs;
     private int contNameTAble = 0;
     Object[] nombres;
-/*    public Coneccion(String bd,String url,String driver,String user,String pass)
-    {
-        this.bd = bd;
-        this.url = url;
-        this.driver = driver;
-        this.user = user;
-        this.password = pass;
-    }
-    public Coneccion(String bd,String user,String pass,String schema)
-    {
-        this.bd = bd;
-        this.schema = schema;
-        this.url="jdbc:postgresql://localhost/"+bd;
-        this.driver="org.postgresql.Driver";
-        this.password = pass;
-    }*/
+
     public Coneccion()
     {
-        /*bd="telefonos";
-        schema ="public";
-        url="jdbc:postgresql://localhost/"+bd;
-        driver="org.postgresql.Driver";
-        user = "postgres";
-        password = "DARCNESS147369";
-        */
     }
     public void setDatos(String bd,String user,String pass,String schema)
     {
@@ -152,7 +130,6 @@ public class Coneccion
         String sql="select tablename from pg_tables where schemaname = '"+schema+"'";
         try 
         {
-            //conecta();
             rs1= consulta(sql);
             while(rs1.next())
             {
