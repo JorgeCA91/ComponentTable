@@ -65,9 +65,17 @@ public class CompTable extends javax.swing.JFrame {
         }
         return nombres;
     }
+    public void resetea()
+    {
+        while(tabla1.getColumnModel().getColumnCount()>0)
+        {
+            tabla1.getColumnModel().removeColumn(tabla1.getColumnModel().getColumn(0));
+        }
+    }
     public void llenaTabla()
     {
-        tabla1.setModel(modelo);
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
         tabla1.removeAll();
         filas.removeAllElements();
         try
@@ -90,7 +98,6 @@ public class CompTable extends javax.swing.JFrame {
                         for (int i=0; i< cantidadColumnas;i++)
                         {
                             fila[i]=rs.getObject(i+1);
-                            
                         }
                         filas.add(fila);
                     }
