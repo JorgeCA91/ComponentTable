@@ -76,7 +76,7 @@ public class CompTable extends javax.swing.JFrame {
     {
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
-        tabla1.removeAll();
+        //tabla1.removeAll();
         filas.removeAllElements();
         try
         {
