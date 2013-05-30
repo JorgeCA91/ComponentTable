@@ -6,17 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CompTable extends javax.swing.JFrame {
-
+public class CompTable extends javax.swing.JFrame 
+{
     int cantidadAPMax=20;
     int cantidadAPMin=0;
     int cantidadColumnas;
     Object[] nombres;
+    Object[] nombresB;
     Object[] fila;
     Coneccion con = new Coneccion();
     String tabla;
@@ -28,7 +30,6 @@ public class CompTable extends javax.swing.JFrame {
     public CompTable(String tabla) 
     {
         this.tabla = tabla;
-        
         initComponents();
         this.setLocation(500, 200);
         setVisible(false);
@@ -38,6 +39,18 @@ public class CompTable extends javax.swing.JFrame {
         regresar.addActionListener(botones);
     }
     
+    public Object[] getModeloBases()
+    {
+        try 
+        {
+            nombresB = con.setModeloBases();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, e, "Error Cargando Lista de Tablas", JOptionPane.ERROR_MESSAGE);
+        }
+        return nombresB;
+    }
     
     
     public void contNameTable()
@@ -111,6 +124,19 @@ public class CompTable extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e, "Error Llenando tabla ", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void descnecta()
+    {
+        try
+        {
+            con.desconecta();
+        }
+        catch(SQLException e)
+        {
+            
+        }
+    }
+    
     public void setIndexTabla(int index)
     {
         this.INDEX_TABLA = index;
@@ -140,7 +166,6 @@ public class CompTable extends javax.swing.JFrame {
     {
         con.setDatos(bd, user, pass, schema);
     }
-    
     public void limpiaTabla()
     {
         while(tabla1.getRowCount()>0)

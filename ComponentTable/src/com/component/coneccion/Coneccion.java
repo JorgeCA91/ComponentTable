@@ -17,8 +17,9 @@ public class Coneccion
     private String tabla;
     private ResultSet rs;
     private int contNameTAble = 0;
+    private int contNameBase = 0;
     Object[] nombres;
-
+    Object[] nombresB;
     public Coneccion()
     {
     }
@@ -105,6 +106,7 @@ public class Coneccion
         }
         return c;
     }
+    
     public void desconecta() throws SQLException
     {
             try
@@ -119,6 +121,10 @@ public class Coneccion
     public int getContNameTAble()
     {
         return this.contNameTAble;
+    }
+    public int getContNameBases()
+    {
+        return this.contNameBase;
     }
     public Object[] getModeloTablas()
     {
@@ -159,6 +165,8 @@ public class Coneccion
                 nombres[i]=(String) rs1.getString(1);
                 i++;
             }
+            for(int j=0 ; j<nombres.length;j++)
+                System.out.println(nombres[j]);
         } 
         catch (Exception e) 
         {
@@ -166,6 +174,52 @@ public class Coneccion
         }
         return nombres;
     }
+    
+    public void contNameBases()
+    {
+        ResultSet rs1;
+        String sql="select datname from pg_database";
+        try 
+        {
+            rs1= consulta(sql);
+            while(rs1.next())
+            {
+                contNameBase++;
+            }
+            nombresB = new Object[contNameBase];
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public Object[] setModeloBases()
+    {
+
+        ResultSet rs1;
+        String sql="select datname from pg_database";
+        try 
+        {
+            conecta();
+            contNameBases();
+            nombresB = new Object[getContNameBases()];
+            int i = 0;
+            rs1= consulta(sql);
+            while(rs1.next())
+            {
+                nombresB[i]=(String) rs1.getString(1);
+                i++;
+            }
+            
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return nombresB;
+    }
+    
     public Connection getCon()
     {
         return con;
